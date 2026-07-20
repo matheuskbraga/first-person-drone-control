@@ -75,8 +75,21 @@ class DroneInterface(ctk.CTk):
         else:
             self.drone.set_velocity('forward_backward', 0)
 
-        # Adicione os mapeamentos para 'left_right' (Esquerda/Direita) 
-        # e 'yaw' (Rotação) seguindo a mesma estrutura de if/elif/else acima.
+        # Esquerda e Direita
+        if 'a' in self.pressed_keys:
+            self.drone.set_velocity('left_right', -self.speed)
+        elif 'd' in self.pressed_keys:
+            self.drone.set_velocity('left_right', self.speed)
+        else:
+            self.drone.set_velocity('left_right', 0)
+
+        # Rotação (Yaw)
+        if 'q' in self.pressed_keys:
+            self.drone.set_velocity('yaw', -self.speed)
+        elif 'e' in self.pressed_keys:
+            self.drone.set_velocity('yaw', self.speed)
+        else:
+            self.drone.set_velocity('yaw', 0)
 
     def _send_drone_commands(self):
         """Loop contínuo que envia os RC Controls para o drone a cada 50ms."""

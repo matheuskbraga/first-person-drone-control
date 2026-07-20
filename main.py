@@ -1,28 +1,19 @@
+# main.py
 from drone_controller import TelloController
 from ui import DroneInterface
 
 def main():
-    print("Iniciando o sistema do Drone...")
-    
-    # 1. Instancia o controlador
-    drone = TelloController()
-    
-    # 2. Conecta à rede WiFi do Tello
+    """
+    Ponto de entrada principal da aplicação.
+    Inicializa o controlador do drone e a interface do usuário.
+    """
     try:
-        drone.connect()
+        controller = TelloController()
+        controller.connect()
+        app = DroneInterface(drone_controller=controller)
+        app.mainloop()
     except Exception as e:
-        print(f"Erro ao conectar com o Tello: {e}")
-        print("Certifique-se de que o computador está conectado no WiFi do drone.")
-        return
-
-    # 3. Inicializa a Interface Gráfica injetando o controle do drone nela
-    app = DroneInterface(drone)
-    
-    # 4. Inicia o loop principal da janela do sistema
-    print("Interface carregada. Comandos básicos:")
-    print("- Pressione 'T' para decolar.")
-    print("- Pressione 'L' para pousar.")
-    app.mainloop()
+        print(f"Ocorreu um erro ao iniciar a aplicação: {e}")
 
 if __name__ == "__main__":
     main()
